@@ -1,0 +1,251 @@
+import React, { useState } from 'react';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { ChevronDown, TrendingUp, AlertCircle, CheckCircle, Building2 } from 'lucide-react';
+
+const CreditIntelligenceDashboard = () => {
+  const [selectedCompany, setSelectedCompany] = useState('Apple Inc.');
+  
+  // Dummy data
+  const companies = [
+    'Apple Inc.',
+    'Microsoft Corporation',
+    'Google LLC',
+    'Amazon.com Inc.',
+    'Tesla Inc.'
+  ];
+
+  const creditTrendData = [
+    { month: 'Jan', score: 72 },
+    { month: 'Feb', score: 74 },
+    { month: 'Mar', score: 71 },
+    { month: 'Apr', score: 76 },
+    { month: 'May', score: 78 },
+    { month: 'Jun', score: 78 }
+  ];
+
+  const sentimentData = [
+    { category: 'Payment History', positive: 85, negative: 15 },
+    { category: 'Financial Stability', positive: 72, negative: 28 },
+    { category: 'Market Confidence', positive: 91, negative: 9 },
+    { category: 'Risk Assessment', positive: 68, negative: 32 }
+  ];
+
+  const scoreFactors = [
+    { icon: CheckCircle, text: "Excellent payment history with 99.2% on-time payments", positive: true },
+    { icon: TrendingUp, text: "Strong revenue growth of 15% year-over-year", positive: true },
+    { icon: CheckCircle, text: "Low debt-to-equity ratio of 0.31", positive: true },
+    { icon: AlertCircle, text: "Market volatility affecting tech sector confidence", positive: false }
+  ];
+
+  const getScoreColor = (score) => {
+    if (score >= 80) return 'text-emerald-600';
+    if (score >= 70) return 'text-amber-500';
+    return 'text-red-500';
+  };
+
+  const getScoreGradient = (score) => {
+    if (score >= 80) return 'from-emerald-400 to-emerald-600';
+    if (score >= 70) return 'from-amber-400 to-amber-600';
+    return 'from-red-400 to-red-600';
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+              📊 Credit Intelligence Platform
+            </h1>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <select 
+                  value={selectedCompany}
+                  onChange={(e) => setSelectedCompany(e.target.value)}
+                  className="appearance-none bg-white border border-slate-300 rounded-lg px-4 py-2 pr-8 text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                >
+                  {companies.map(company => (
+                    <option key={company} value={company}>{company}</option>
+                  ))}
+                </select>
+                <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Company Info & Score Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Company Info */}
+          <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 transition-all hover:shadow-xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <Building2 className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-slate-900">{selectedCompany}</h2>
+                <p className="text-sm text-slate-500">Technology Sector</p>
+              </div>
+            </div>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-slate-600">Market Cap:</span>
+                <span className="font-medium">$3.2T</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-600">Last Updated:</span>
+                <span className="font-medium">2 hours ago</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Score Display */}
+          <div className="lg:col-span-2 bg-white rounded-xl shadow-lg border border-slate-200 p-6 transition-all hover:shadow-xl">
+            <div className="text-center">
+              <h3 className="text-lg font-semibold text-slate-700 mb-4">Credit Intelligence Score</h3>
+              <div className="relative">
+                <div className={`w-32 h-32 mx-auto rounded-full bg-gradient-to-br ${getScoreGradient(78)} flex items-center justify-center shadow-lg transform transition-transform hover:scale-105`}>
+                  <span className="text-4xl font-bold text-white">78</span>
+                </div>
+                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-slate-100 text-slate-600 text-xs px-3 py-1 rounded-full">Good</span>
+                </div>
+              </div>
+              <div className="mt-6 flex justify-center space-x-6 text-sm">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-emerald-600">+3</div>
+                  <div className="text-slate-500">This Month</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600">+12</div>
+                  <div className="text-slate-500">This Year</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Why This Score Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 transition-all hover:shadow-xl">
+            <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-blue-500" />
+              Why this score?
+            </h3>
+            <div className="space-y-3">
+              {scoreFactors.map((factor, index) => {
+                const IconComponent = factor.icon;
+                return (
+                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
+                    <IconComponent className={`w-5 h-5 mt-0.5 ${factor.positive ? 'text-emerald-500' : 'text-amber-500'}`} />
+                    <span className="text-sm text-slate-700 leading-relaxed">{factor.text}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Sentiment Analysis Chart */}
+          <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 transition-all hover:shadow-xl">
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">Sentiment Analysis</h3>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={sentimentData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                  <XAxis 
+                    dataKey="category" 
+                    tick={{ fontSize: 12 }}
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                  />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'white', 
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                    }}
+                  />
+                  <Bar dataKey="positive" fill="#10b981" name="Positive" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="negative" fill="#f59e0b" name="Negative" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
+        {/* Credit Trend Chart */}
+        <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 transition-all hover:shadow-xl">
+          <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-blue-500" />
+            Credit Score Trend
+          </h3>
+          <div className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={creditTrendData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis 
+                  dataKey="month" 
+                  tick={{ fontSize: 12 }}
+                  stroke="#64748b"
+                />
+                <YAxis 
+                  domain={['dataMin - 5', 'dataMax + 5']}
+                  tick={{ fontSize: 12 }}
+                  stroke="#64748b"
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'white', 
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                  }}
+                  labelStyle={{ color: '#1e293b' }}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="score" 
+                  stroke="#3b82f6" 
+                  strokeWidth={3}
+                  dot={{ fill: '#3b82f6', strokeWidth: 2, r: 6 }}
+                  activeDot={{ r: 8, fill: '#1d4ed8' }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Key Metrics Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+          {[
+            { title: 'Payment Score', value: '92/100', change: '+2', color: 'emerald' },
+            { title: 'Liquidity Ratio', value: '1.24', change: '+0.08', color: 'blue' },
+            { title: 'Risk Level', value: 'Low', change: 'Stable', color: 'green' },
+            { title: 'Market Position', value: 'Strong', change: '+1 Tier', color: 'purple' }
+          ].map((metric, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-lg border border-slate-200 p-4 transition-all hover:shadow-xl hover:-translate-y-1">
+              <div className="flex justify-between items-start mb-2">
+                <h4 className="text-sm font-medium text-slate-600">{metric.title}</h4>
+                <span className={`text-xs text-${metric.color}-600 bg-${metric.color}-50 px-2 py-1 rounded-full`}>
+                  {metric.change}
+                </span>
+              </div>
+              <div className={`text-2xl font-bold text-${metric.color}-600`}>
+                {metric.value}
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default CreditIntelligenceDashboard;
