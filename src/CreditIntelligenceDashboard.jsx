@@ -106,6 +106,14 @@ const CreditIntelligenceDashboard = () => {
     return `$${cap}`;
   };
 
+  // Metric definitions to map to backend data
+  const metrics = [
+    { title: 'Revenue', key: 'revenue', color: 'emerald' },
+    { title: 'Debt to Equity', key: 'debt_to_equity', color: 'blue' },
+    { title: 'Profit Margin', key: 'profit_margin', color: 'green' },
+    { title: 'Return on Equity', key: 'return_on_equity', color: 'purple' },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
@@ -132,8 +140,10 @@ const CreditIntelligenceDashboard = () => {
           </div>
         </div>
       </header>
+
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
         {/* Company Info & Score Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Company Info */}
@@ -158,6 +168,7 @@ const CreditIntelligenceDashboard = () => {
               </div>
             </div>
           </div>
+
           {/* Main Score Display */}
           <div className="lg:col-span-2 bg-white rounded-xl shadow-lg border border-slate-200 p-6 transition-all hover:shadow-xl">
             <div className="text-center">
@@ -175,6 +186,21 @@ const CreditIntelligenceDashboard = () => {
             </div>
           </div>
         </div>
+
+        {/* Key Metrics Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-8">
+          {metrics.map((metric, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-lg border border-slate-200 p-4 transition-all hover:shadow-xl hover:-translate-y-1">
+              <div className="text-center">
+                <h4 className="text-sm font-medium text-slate-600">{metric.title}</h4>
+                <div className={`text-2xl font-bold text-${metric.color}-600`}>
+                  {selectedCompany.metrics ? selectedCompany.metrics[metric.key] : 'N/A'}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
         {/* Why This Score Section & Sentiment Analysis */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 transition-all hover:shadow-xl">
@@ -194,6 +220,7 @@ const CreditIntelligenceDashboard = () => {
               })}
             </div>
           </div>
+
           <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 transition-all hover:shadow-xl">
             <h3 className="text-lg font-semibold text-slate-900 mb-4">Sentiment Analysis</h3>
             <div className="h-64">
@@ -223,6 +250,7 @@ const CreditIntelligenceDashboard = () => {
             </div>
           </div>
         </div>
+
         {/* Credit Trend Chart */}
         <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 transition-all hover:shadow-xl">
           <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
