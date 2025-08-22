@@ -1,12 +1,38 @@
-# React + Vite
+# Credit Intelligence Dashboard: Local Setup Guide
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This guide will walk you through the process of setting up and running the Credit Intelligence Dashboard locally. The application consists of a **Python Flask backend** that connects to a **MongoDB Atlas database**, and a **React frontend** that displays the data.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prerequisites
 
-## Expanding the ESLint configuration
+You'll need the following installed on your system:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Python 3.x**: For the Flask backend.  
+- **Node.js & npm**: For the React frontend.  
+- **MongoDB Atlas**: A cloud-based database account.  
+- **A tool like curl or Postman**: To manually trigger the initial data update.  
+
+---
+
+## Step 1: MongoDB Atlas Setup
+
+1. **Network Access**:  
+   In your MongoDB Atlas dashboard, navigate to **Network Access** and add a new IP address.  
+   For development, you can add `0.0.0.0/0` to allow access from anywhere, but be aware this is **not secure for production**.
+
+2. **Get Connection String**:  
+   - Go to your cluster.  
+   - Click the **Connect** button.  
+   - Choose **Connect your application**.  
+   - Copy the connection string.
+
+---
+
+## Step 2: Backend Setup (Python)
+
+1. **Navigate to the backend project directory** in your terminal.
+
+2. **Create a Virtual Environment**:
+   ```bash
+   python -m venv venv
