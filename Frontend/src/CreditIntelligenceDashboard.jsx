@@ -17,7 +17,7 @@ const CreditIntelligenceDashboard = () => {
   const fetchCompanies = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/api/companies");
+      const res = await fetch("https://credtech-hackethon-1.onrender.com/api/companies");
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
@@ -38,7 +38,7 @@ const CreditIntelligenceDashboard = () => {
   // Function to fetch details for a specific company
   const fetchCompanyDetails = async (name) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/companies/${name}`);
+      const res = await fetch(`http://https://credtech-hackethon-1.onrender.com/api/companies/${name}`);
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
@@ -85,7 +85,7 @@ const CreditIntelligenceDashboard = () => {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-red-50">
-        <p className="text-xl text-red-700">Error: {error}. Please ensure your backend is running at http://localhost:5000 and has data populated.</p>
+        <p className="text-xl text-red-700">Error: {error}. Please ensure your backend is running at https://credtech-hackethon-1.onrender.com and has data populated.</p>
       </div>
     );
   }
