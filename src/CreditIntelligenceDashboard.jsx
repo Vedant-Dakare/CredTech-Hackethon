@@ -223,6 +223,29 @@ const CreditIntelligenceDashboard = () => {
             </div>
           </div>
         </div>
+
+ {/* Key Metrics Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+          {[
+            { title: 'Payment Score', value: '92/100', change: '+2', color: 'emerald' },
+            { title: 'Liquidity Ratio', value: '1.24', change: '+0.08', color: 'blue' },
+            { title: 'Risk Level', value: 'Low', change: 'Stable', color: 'green' },
+            { title: 'Market Position', value: 'Strong', change: '+1 Tier', color: 'purple' }
+          ].map((metric, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-lg border border-slate-200 p-4 transition-all hover:shadow-xl hover:-translate-y-1">
+              <div className="flex justify-between items-start mb-2">
+                <h4 className="text-sm font-medium text-slate-600">{metric.title}</h4>
+                <span className={`text-xs text-${metric.color}-600 bg-${metric.color}-50 px-2 py-1 rounded-full`}>
+                  {metric.change}
+                </span>
+              </div>
+              <div className={`text-2xl font-bold text-${metric.color}-600`}>
+                {metric.value}
+              </div>
+            </div>
+          ))}
+        </div>
+
         {/* Credit Trend Chart */}
         <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 transition-all hover:shadow-xl">
           <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
